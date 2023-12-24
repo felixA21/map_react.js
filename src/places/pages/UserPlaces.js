@@ -11,8 +11,8 @@ const DUMMY_PLACES = [
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
     location: {
-      lat: 40,
-      lng: -73
+      lat: 40.748817,
+      lng: -73.985428
     },
     creator: "u1"
   },
