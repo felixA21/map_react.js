@@ -16,7 +16,6 @@ const DUMMY_PLACES = [
     },
     creator: "u1"
   },
-
   {
     id: "p2",
     title: "Empire State Building",
