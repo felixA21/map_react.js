@@ -1,41 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PlaceList from "../components/PlaceList";
-
-const DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "One of the best famous skyscrapper",
-    address: "20 w 34th, 1001 NY",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    location: {
-      lat: 40.748817,
-      lng: -73.985428
-    },
-    creator: "u1"
-  },
-  {
-    id: "p2",
-    title: "Empire State Building",
-    description: "One of the best famous skyscrapper",
-    address: "20 w 34th, 1001 NY",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg",
-    location: {
-      lat: 40,
-      lng: -73
-    },
-    creator: "u2"
-  }
-];
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElement/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 
 const UserPlaces = () => {
+  const [loadedPlaces, setLoadedPlaces] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   const userId = useParams().userId;
 
-  const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/places/user/${userId}`
+        );
+        setLoadedPlaces(responseData.places);
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, [sendRequest, userId]);
 
-  return <PlaceList items={loadedPlaces} />;
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    </React.Fragment>
+  );
 };
 export default UserPlaces;
