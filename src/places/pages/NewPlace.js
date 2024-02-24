@@ -54,7 +54,7 @@ const NewPlace = () => {
       formData.append("image", formState.inputs.image.value);
 
       await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + "/places",
+        "https://backend-production-6a36.up.railway.app/api/places",
         "POST",
         formData,
         {

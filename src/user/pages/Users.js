@@ -13,7 +13,7 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL + "/users"
+          "https://backend-production-6a36.up.railway.app/api/users"
         );
 
         setLoadedUser(responseData.users);

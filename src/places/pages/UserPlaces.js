@@ -15,7 +15,7 @@ const UserPlaces = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
+          `https://backend-production-6a36.up.railway.app/api/places/user/${userId}`
         );
         setLoadedPlaces(responseData.places);
       } catch (err) {}
